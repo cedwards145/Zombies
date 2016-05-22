@@ -9,20 +9,48 @@ import java.util.Random;
 
 public class Zombie extends Entity
 {
+    private Survivor target = null;
     public Zombie()
     {
         super();
+        damage = 2;
     }
 
     @Override
     public char getChar() {
-        return 'z';
+        if (isAlive())
+            return 'z';
+        else
+            return 'x';
     }
 
     public void update(World world)
     {
-        Map map = world.map;
-        wander(map);
+        if (!isAlive())
+            return;
+
+        if (target == null) {
+            for (Entity e : world.entities) {
+                if (e.getClass().equals(Survivor.class)) {
+                    Survivor s = (Survivor)e;
+                    if (s.isAlive()) {
+                        target = s;
+                        break;
+                    }
+                }
+            }
+        }
+        if (target != null && position.distance(target.position) < 10) {
+            if (!target.isAlive())
+                target = null;
+            else if (position.distance(target.position) <= 1)
+                attack(target);
+            else
+                moveTo(world.map, position.move(position.directionToPoint(target.position)));
+        }
+        else {
+            wander(world.map);
+        }
     }
 
     private void wander(Map map)

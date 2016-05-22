@@ -32,9 +32,9 @@ public class Point
         }
     }
 
-    public float distance(Point other)
+    public int distance(Point other)
     {
-        return (float)Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(y - other.y, 2));
+        return Math.round(Math.abs(other.x - x) + Math.abs(other.y - y));
     }
 
     public Enums.Direction directionToPoint(Point other)
@@ -47,16 +47,16 @@ public class Point
 
         if (absXDelta > absYDelta)
         {
-            if (x > 0)
-                return Enums.Direction.Up;
-            else if (x < 0)
+            if (xDelta > 0)
+                return Enums.Direction.Right;
+            else if (xDelta < 0)
                 return Enums.Direction.Left;
         }
         else
         {
-            if (y > 0)
+            if (yDelta > 0)
                 return Enums.Direction.Down;
-            else if (y < 0)
+            else if (yDelta < 0)
                 return Enums.Direction.Up;
         }
         return Enums.Direction.None;

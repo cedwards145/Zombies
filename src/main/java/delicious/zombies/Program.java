@@ -3,9 +3,13 @@ package delicious.zombies;
 import delicious.zombies.entities.Survivor;
 import delicious.zombies.entities.Zombie;
 
+import static spark.Spark.*;
+
 public class Program
 {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException
+    {
+        /*
         Map map = new Map(5, 5);
         World world = new World(map);
 
@@ -23,5 +27,7 @@ public class Program
             System.out.println(world.print());
             Thread.sleep(1000);
         }
+        */
+        get("/hello", (req, res) -> "Hello World");
     }
 }
